@@ -42,6 +42,17 @@ def delete(id):
     db.session.commit()
     return redirect(url_for('index'))
 
+@app.route('/edit/<int:id>', methods=['GET','POST'])
+def edit(id):
+    estudante = Estudante.query.get(id)
+    if request.method == 'POST':
+        estudante.nome = request.form['nome']
+        estudante.idade = request.form['idade']
+        db.session.commit()
+        return redirect(url_for('index'))
+    
+    return render_template('edit.html', estudante=estudante)
+
 
 if __name__ == '__main__':
     with app.app_context():
